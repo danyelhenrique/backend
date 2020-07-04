@@ -1,18 +1,21 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { SchedulesDates } from './SchedulesDates';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id?: number;
 
   @Column()
-  firstName!: string;
+  name!: string;
 
   @Column()
-  lastName!: string;
+  email!: string;
 
   @Column()
-  age!: number;
+  password!: string;
+
+  @OneToMany(() => SchedulesDates, (schedules_dates) => schedules_dates.user)
+  schedules_connection!: SchedulesDates[];
 }

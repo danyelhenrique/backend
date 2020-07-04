@@ -5,7 +5,7 @@
     "lib": ["es5", "es6"],
     "allowJs": true,
     "outDir": "./build",
-
+    "downlevelIteration": true,
     "strict": true,
     "noImplicitAny": false,
 

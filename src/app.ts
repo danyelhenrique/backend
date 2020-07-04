@@ -1,12 +1,12 @@
-import "../src/config/dotenv";
-import "reflect-metadata";
+import '../src/config/dotenv';
+import 'reflect-metadata';
 
-import express, { Express } from "express";
-import cors from "cors";
+import express, { Express } from 'express';
+import cors from 'cors';
 
-import "express-async-errors";
+import 'express-async-errors';
 
-import routes from "./routes";
+import routes from './routes';
 
 class App {
   public server: Express;
