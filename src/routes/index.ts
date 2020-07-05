@@ -18,4 +18,7 @@ route.post('/sessions', SessionController.store);
 route.use(authMiddleware);
 route.post('/schedules', ScheduleController.store);
 route.put('/schedules/:schedule_id', ScheduleController.update);
+
+route.put('/users', UserController.update);
+
 export default route;

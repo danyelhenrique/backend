@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { ValidationError } from 'yup';
 
 import { startOfDay, parseISO } from 'date-fns';
-import * as _ from 'underscore';
 
 import { getRepository, Between } from 'typeorm';
 
@@ -16,11 +15,10 @@ const storeSchema = Yup.object().shape({
   lunch: Yup.date().nullable(true).default(null),
   lunch_end: Yup.date().nullable(true).default(null),
   exit: Yup.date().nullable(true).default(null),
-  user_id: Yup.string().required(),
 });
 
 class ScheduleController {
-  async store(req: Request, res: Response) {
+  async store(req, res: Response) {
     try {
       await storeSchema.validate(req.body);
     } catch (error) {
@@ -28,7 +26,7 @@ class ScheduleController {
 
       return res.json({ error: err });
     }
-    const { user_id } = req.body;
+    const userId = req.userId;
     const schedulesDatesRepository = getRepository(SchedulesDates);
     const schedules = getRepository(Schedules);
 
@@ -37,7 +35,7 @@ class ScheduleController {
 
     const schedulesDates = schedulesDatesRepository.create({
       schedule_id: scheduleCreated.id,
-      user_id,
+      user_id: userId,
       date: req.body.date,
     });
 
@@ -46,15 +44,15 @@ class ScheduleController {
     return res.json(scheduleCreated);
   }
 
-  async update(req: Request, res: Response) {
-    const scheduleRepository = getRepository(SchedulesDates);
+  async update(req, res: Response) {
+    const scheduleRepository = getRepository(Schedules);
     const { schedule_id } = req.params;
 
     let schedule = (await scheduleRepository.findOne(
       schedule_id
     )) as SchedulesDates;
 
-    schedule = { ...schedule, ...req.body };
+    schedule = { ...schedule, ...req.body, user_id: req.userId };
 
     await scheduleRepository.save(schedule);
 

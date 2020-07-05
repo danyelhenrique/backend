@@ -8,7 +8,7 @@
     "downlevelIteration": true,
     "strict": true,
     "noImplicitAny": false,
-
+    "typeRoots": ["node_modules/@types", "src/@types/**/*"],
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

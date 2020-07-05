@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, LessThanOrEqual } from 'typeorm';
 import bcrypt from 'bcrypt';
 import * as Yup from 'yup';
 
@@ -42,6 +42,19 @@ class UserController {
     const data = await userRepository.find();
 
     return res.json(data);
+  }
+
+  async update(req, res: Response) {
+    const userRepository = getRepository(User);
+
+    let [user] = await userRepository.find(req.userId as any);
+    user = { ...user, ...req.body };
+
+    await userRepository.save(user);
+
+    delete user.password;
+
+    return res.json(user);
   }
 }
 

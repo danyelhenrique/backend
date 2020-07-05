@@ -13,7 +13,6 @@ export default async (req, res, next) => {
 
   try {
     const decoded = await jwtAsync(token, process.env.JWT_SECURITY);
-
     req.userId = decoded.id;
 
     return next();

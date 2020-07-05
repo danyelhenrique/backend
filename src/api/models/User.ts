@@ -16,6 +16,9 @@ export class User {
   @Column()
   password!: string;
 
+  @Column()
+  avatar_url!: string;
+
   @OneToMany(() => SchedulesDates, (schedules_dates) => schedules_dates.user)
   schedules_connection!: SchedulesDates[];
 }

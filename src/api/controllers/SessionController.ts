@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 
 class SessionController {
-  async store(req: Request, res: Response) {
+  async store(req, res: Response) {
     const schema = Yup.object().shape({
       email: Yup.string().email(),
       password: Yup.string(),
@@ -37,7 +37,7 @@ class SessionController {
 
     const { id, name, email: Email } = user;
 
-    const payload = { id, name };
+    const payload = { id, name, Email };
 
     const token = jwt.sign(payload, process.env.JWT_SECURITY as string, {
       expiresIn: '7d',
